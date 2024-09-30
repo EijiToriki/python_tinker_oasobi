@@ -24,6 +24,15 @@ class Application(tk.Frame):
         self.output_sample_form = tk.Text()
         self.output_sample_form.place(x=20, y=120, width=320, height=50)
 
+        self.result_label = tk.Label()
+        self.result_label["text"] = "実行結果"
+        self.result_label.place(x=10, y=180) 
+
+        self.result_text = tk.Label()
+        self.result_text["text"] = "実行ボタンを押してください"
+        self.result_text["fg"] = "gray"
+        self.result_text.place(x=20, y=200)        
+
         self.imp_btn = tk.Button(self, text="実行", 
                   command=self.implement_program,
                   bg="lightblue",  # 背景色
@@ -34,7 +43,7 @@ class Application(tk.Frame):
                   activebackground="lightgreen",  # クリック中の背景色
                   activeforeground="white"  # クリック中の文字色
                   )
-        self.imp_btn.place(x=150, y=200, width=100, height=30)
+        self.imp_btn.place(x=150, y=250, width=100, height=30)
 
     def implement_program(self):
         with open(INPUT_FILE_NAME, mode='w') as input:
@@ -48,9 +57,13 @@ class Application(tk.Frame):
         ideal_output = self.output_sample_form.get(0., tk.END)
 
         if ideal_output.strip() == result.stdout.strip():
-            print('OK')
+            self.result_text["text"] = "OK"
+            self.result_text["fg"] = "green"
+            self.result_text["font"] = ("Helvetica", 16, "bold")
         else:
-            print('NG:' + result.stdout + " : " + ideal_output)
+            self.result_text["text"] = "NG"
+            self.result_text["fg"] = "red"
+            self.result_text["font"] = ("Helvetica", 16, "bold")
 
 
 root = tk.Tk()
